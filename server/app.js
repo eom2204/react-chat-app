@@ -13,6 +13,9 @@ app.use(express.json());
 // CORS middleware
 app.use(cors());  // Allow all origins (or configure to limit origins)
 
+// Connect to MongoDB
+Connection();
+
 app.get('/health', (req, res) => {
     res.status(200).json({
         status: 'OK',
@@ -20,9 +23,6 @@ app.get('/health', (req, res) => {
         timestamp: new Date().toISOString()
     });
 });
-
-// Connect to MongoDB
-Connection();
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -252,3 +252,6 @@ const PORT = process.env.PORT || 3002;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+module.exports = app;
