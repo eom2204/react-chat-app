@@ -248,10 +248,8 @@ io.on("connection", (socket) => {
     })
 })
 
-// const PORT = process.env.PORT || 3002;
-// server.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 3002;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
-
-module.exports = server;
