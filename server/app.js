@@ -13,6 +13,14 @@ app.use(express.json());
 // CORS middleware
 app.use(cors());  // Allow all origins (or configure to limit origins)
 
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'Server is running',
+        timestamp: new Date().toISOString()
+    });
+});
+
 // Connect to MongoDB
 Connection();
 
