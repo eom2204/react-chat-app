@@ -11,7 +11,7 @@ const UserLogin = ({setUser}) => {
         localStorage.setItem('userName', userName);
         localStorage.setItem('userSurname', userSurname);
         setUser(`${userName} ${userSurname}`);
-        localStorage.setItem('avatar', `https://picsum.photos/id/${_.random(1,1000)}/200/300`)
+        localStorage.setItem('avatar', `https://ui-avatars.com/api/?name=${encodeURIComponent(friendName)}&background=random`)
     }
   return (
     <div className='login_container'>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import NewChatDialog from "./NewChatDialog";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:3002"); // Initialize socket once at the top
+const socket = io("https://vite-react-1xpb7emfp-eom2204s-projects.vercel.app"); // Initialize socket once at the top
 
 const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
