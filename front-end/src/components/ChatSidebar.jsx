@@ -6,6 +6,7 @@ const socket = io("http://localhost:3002"); // Initialize socket once at the top
 
 const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const chatOwner = `${localStorage.getItem("userName")} ${localStorage.getItem("userSurname")}`;
 
     useEffect(() => {
         // Handle socket events for chat creation
@@ -39,7 +40,7 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
             user: friendName,
             avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(friendName)}&background=random`,
             chatId: `chat_${Math.random().toString(36).substring(2, 9)}`,
-            owner: localStorage.getItem("userName"), // Store the logged-in user's name
+            owner: chatOwner, // Store the logged-in user's name
         };
 
         // Send new chat to the backend via socket
@@ -50,7 +51,8 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
 
     return (
         <div className="chat-sidebar">
-            <h3>Your Chats</h3>
+            <h3>Hello, {chatOwner}</h3>
+            <h4>My chats: </h4>
             <ul className="chat-list">
                 {chats.map((chat) => (
                     <li

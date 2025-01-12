@@ -116,17 +116,22 @@ io.on("connection", (socket) => {
 
             // Find the logged-in user by their name
             let user = await User.findOne({user: owner});
+
             if (!user) {
                 // If the user doesn't exist, create a new record
                 user = new User({
                     user: owner,
                     chats: [],
                 });
+                await user.save();
             }
 
             // Add the chat to the user's list of chats
             user.chats.push(createdChat._id);
             await user.save();
+
+            // // Re-populate chats to include newly created chat
+            // await user.populate("chats");
 
             // Emit the created chat back to the frontend
             socket.emit("chatCreated", createdChat);
