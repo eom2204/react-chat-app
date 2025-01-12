@@ -6,7 +6,7 @@ import UserLogin from "./UserLogin";
 import ChatSidebar from "./ChatSidebar.jsx";
 
 const ChatContainer = ({user, setUser}) => {
-    const socket = socketIOClient("https://vite-react-1xpb7emfp-eom2204s-projects.vercel.app");
+    const socket = socketIOClient("https://react-chat-app-server-five.vercel.app/");
     const [chats, setChats] = useState([]);
     const [currentChat, setCurrentChat] = useState(null); // Current active chat
     const [messages, setMessages] = useState([]);
