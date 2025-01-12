@@ -4,10 +4,6 @@ const ChatBox = ({chats}) => {
     const endOfMessages = useRef();
     const currentUser = `${localStorage.getItem('userName')} ${localStorage.getItem('userSurname')}`;
 
-    useEffect(() => {
-        console.log("Chats received:", chats); // Logs all chat messages
-        console.log("Current user:", currentUser); // Logs the current logged-in user
-    }, [chats]);
 
     function SenderChat ({message, user, avatar}) {
         return (

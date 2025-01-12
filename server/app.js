@@ -220,19 +220,26 @@ io.on("connection", (socket) => {
     socket.on("deleteChat", async ({ chatId, owner }) => {
         try {
             // Find the user who owns the chat
-            const user = await User.findOne({ user: owner });
+            const user = await User.findOne({ user: owner }).populate("chats");
 
             if (!user) {
                 socket.emit("chatDeletionError", "User not found");
                 return;
             }
 
+            const chatToDelete = user.chats.find(chat => chat.chatId === chatId);
+
+            if (!chatToDelete) {
+                socket.emit("chatDeletionError", "Cant find chat with id " + chatId)
+                return;
+            }
+
             // Remove the chat from the user's list of chats
-            user.chats = user.chats.filter(chat => chat.toString() !== chatId);
+            user.chats = user.chats.filter(chat => chat.toString() !== chatToDelete.toString());
             await user.save();
 
             // Delete the chat document from the database
-            await Chat.findByIdAndDelete(chatId);
+            await Chat.findByIdAndDelete(chatToDelete);
 
             // Emit an updated list of chats back to the frontend
             //await user.populate("chats");

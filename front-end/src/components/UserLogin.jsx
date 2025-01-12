@@ -6,12 +6,15 @@ import _ from 'lodash'
 const UserLogin = ({setUser}) => {
     const [userName, setUserName] = useState('');
     const [userSurname, setUserSurname] = useState('');
+
     const handleUser = () => {
-        if(!userName && !userSurname) return;
+        const user = `${userName} ${userSurname}`;
+
+        if(!user) return;
         localStorage.setItem('userName', userName);
         localStorage.setItem('userSurname', userSurname);
-        setUser(`${userName} ${userSurname}`);
-        localStorage.setItem('avatar', `https://ui-avatars.com/api/?name=${encodeURIComponent(friendName)}&background=random`)
+        setUser(user);
+        localStorage.setItem('avatar', `https://ui-avatars.com/api/?name=${encodeURIComponent(user)}&background=random`)
     }
   return (
     <div className='login_container'>

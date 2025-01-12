@@ -72,9 +72,6 @@ const ChatContainer = ({user, setUser}) => {
 
         // Emit the new message to the backend
         socket.emit("newMessage", newMessage);
-
-        // // Optimistically update the messages state
-        // setMessages((prevMessages) => [...prevMessages, newMessage]);
     };
 
     const handleSelectChat = (chat) => {
@@ -111,7 +108,9 @@ const ChatContainer = ({user, setUser}) => {
                     <ChatSidebar
                         chats={chats}
                         setChats={setChats}
-                        onSelectChat={handleSelectChat}/>
+                        onSelectChat={handleSelectChat}
+                        setMessages={setMessages}
+                    />
                     <div className="chat-main">
                         <div className="chats_header">
                             <h4>Chatting with {currentChat ? currentChat.user : "No one selected"}</h4>

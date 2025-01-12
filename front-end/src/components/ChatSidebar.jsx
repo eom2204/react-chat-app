@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 
 const socket = io("https://react-chat-app-7s7p.onrender.com"); // Initialize socket once at the top
 
-const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
+const ChatSidebar = ({ chats, setChats, onSelectChat, setMessages }) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const chatOwner = `${localStorage.getItem("userName")} ${localStorage.getItem("userSurname")}`;
 
@@ -29,6 +29,7 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
             setChats((prevChats) =>
                 prevChats.filter((chat) => chat.chatId !== deletedChatId)
             );
+            setMessages([]);
         };
 
         socket.on("chatCreated", handleChatCreated);
@@ -62,7 +63,10 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
         const confirmDelete = window.confirm("Are you sure you want to remove this chat?");
         if (confirmDelete) {
             // Emit deleteChat event to the server
-            socket.emit("deleteChat", { chatId, chatOwner });
+            socket.emit("deleteChat", {
+                chatId: chatId,
+                owner: chatOwner
+            });
         }
     };
 
