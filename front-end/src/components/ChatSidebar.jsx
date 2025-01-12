@@ -24,11 +24,20 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
             });
         };
 
+        const handleChatDeleted = (deletedChatId) => {
+            // Remove the deleted chat from the state
+            setChats((prevChats) =>
+                prevChats.filter((chat) => chat.chatId !== deletedChatId)
+            );
+        };
+
         socket.on("chatCreated", handleChatCreated);
+        socket.on("chatDeleted", handleChatDeleted);
 
         // Cleanup listeners when the component unmounts
         return () => {
             socket.off("chatCreated", handleChatCreated);
+            socket.off("chatDeleted", handleChatDeleted);
         };
     }, [setChats]);
 
@@ -49,6 +58,14 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
         setIsDialogOpen(false); // Close the dialog
     };
 
+    const handleDeleteChat = (chatId) => {
+        const confirmDelete = window.confirm("Are you sure you want to remove this chat?");
+        if (confirmDelete) {
+            // Emit deleteChat event to the server
+            socket.emit("deleteChat", { chatId, chatOwner });
+        }
+    };
+
     return (
         <div className="chat-sidebar">
             <h3>Hello, {chatOwner}</h3>
@@ -66,6 +83,15 @@ const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
                             className="friend-avatar"
                         />
                         <span className="friend-name">{chat.user}</span>
+                        <button
+                            className="delete-chat-button"
+                            onClick={(e) => {
+                                e.stopPropagation(); // Prevent triggering the chat selection
+                                handleDeleteChat(chat.chatId);
+                            }}
+                        >
+                            X
+                        </button>
                     </li>
                 ))}
             </ul>

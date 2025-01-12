@@ -208,6 +208,33 @@ io.on("connection", (socket) => {
         }
     });
 
+    // Delete a chat
+    socket.on("deleteChat", async ({ chatId, owner }) => {
+        try {
+            // Find the user who owns the chat
+            const user = await User.findOne({ user: owner });
+
+            if (!user) {
+                socket.emit("chatDeletionError", "User not found");
+                return;
+            }
+
+            // Remove the chat from the user's list of chats
+            user.chats = user.chats.filter(chat => chat.toString() !== chatId);
+            await user.save();
+
+            // Delete the chat document from the database
+            await Chat.findByIdAndDelete(chatId);
+
+            // Emit an updated list of chats back to the frontend
+            //await user.populate("chats");
+            socket.emit("chatDeleted", chatId);
+        } catch (err) {
+            console.error("Error deleting chat:", err);
+            socket.emit("chatDeletionError", "Failed to delete chat");
+        }
+    });
+
     socket.on("disconnect", () => {
         console.log("User disconnected:", socket.id);
     })
