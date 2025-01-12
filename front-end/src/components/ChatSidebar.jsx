@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import NewChatDialog from "./NewChatDialog";
 import { io } from "socket.io-client";
 
-
+const socket = io("https://react-chat-app-7s7p.onrender.com"); // Initialize socket once at the top
 
 const ChatSidebar = ({ chats, setChats, onSelectChat }) => {
-    const socket = io("https://react-chat-app-server-five.vercel.app/");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const chatOwner = `${localStorage.getItem("userName")} ${localStorage.getItem("userSurname")}`;
 
