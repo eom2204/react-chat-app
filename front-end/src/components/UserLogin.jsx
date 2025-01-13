@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {FaReact} from 'react-icons/fa6'
 import '../style.css'
-import _ from 'lodash'
+
 
 const UserLogin = ({setUser}) => {
     const [userName, setUserName] = useState('');

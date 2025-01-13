@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import NewChatDialog from "./NewChatDialog";
-import { io } from "socket.io-client";
+import socket from "../services/socket.js";
 
-const socket = io("https://react-chat-app-7s7p.onrender.com"); // Initialize socket once at the top
 
-const ChatSidebar = ({ chats, setChats, onSelectChat, setMessages }) => {
+const ChatSidebar = ({ chats, setChats, onSelectChat, setMessages, setCurrentChat }) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const chatOwner = `${localStorage.getItem("userName")} ${localStorage.getItem("userSurname")}`;
 
@@ -30,6 +29,7 @@ const ChatSidebar = ({ chats, setChats, onSelectChat, setMessages }) => {
                 prevChats.filter((chat) => chat.chatId !== deletedChatId)
             );
             setMessages([]);
+            setCurrentChat(null);
         };
 
         socket.on("chatCreated", handleChatCreated);

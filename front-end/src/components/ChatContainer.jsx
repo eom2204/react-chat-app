@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import socketIOClient from "socket.io-client";
+import socket from "../services/socket.js";
 import ChatBox from "./ChatBox.jsx";
 import InputText from "./InputText";
 import UserLogin from "./UserLogin";
 import ChatSidebar from "./ChatSidebar.jsx";
 
+
 const ChatContainer = ({user, setUser}) => {
-    const socket = socketIOClient("https://react-chat-app-7s7p.onrender.com");
     const [chats, setChats] = useState([]);
     const [currentChat, setCurrentChat] = useState(null); // Current active chat
     const [messages, setMessages] = useState([]);
@@ -99,8 +99,6 @@ const ChatContainer = ({user, setUser}) => {
     };
 
 
-    console.log("USER has full name?", user);
-
     return (
         <div className="chat-container">
             {user ? (
@@ -110,6 +108,7 @@ const ChatContainer = ({user, setUser}) => {
                         setChats={setChats}
                         onSelectChat={handleSelectChat}
                         setMessages={setMessages}
+                        setCurrentChat={setCurrentChat}
                     />
                     <div className="chat-main">
                         <div className="chats_header">
