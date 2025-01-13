@@ -30,6 +30,7 @@ The backend (server) is deployed on Render, which supports automatic deployment 
 The frontend is deployed on Vercel.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Реалізація чату:
 
 - Login and Logout: Користувачу потрібно залогінитися, ввівши прізвище та ім'я. Також є кнопка Logout.
