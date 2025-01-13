@@ -1,4 +1,5 @@
 Chat Implementation:
+
 Login and Logout:
 Users must log in by entering their first and last names. A Logout button is also available.
 
